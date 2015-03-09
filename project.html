@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ge Huang</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script> 
+	  $(document).ready(function(){
+	      $("#flip").click(function(){
+	          $("#panel").slideToggle("slow");
+	      });
+	  });
+	
+	  </script>
+
+
+</head>
+<body>
+	<header class="container">
+		<h1 id="logo">GE HUANG	</h1>
+		<nav>
+			<ul class="nav nav-tabs">
+				<li><a href="index.html">Go Back</a></li>
+				<li><a href="mailto:huangge0385@gmail.com">Email me</a>
+			</ul>
+		</nav>
+	</header>
+	<main class="container">
+		<div class="row">
+			<div id="primary" class="col-md-8">
+				<article>
+					<h1>Project</h1>
+					<h4 id="flip">Java <small>Click me to hide</small></h4>
+					<div id="panel">
+					<p>I mainly use Java to solve algorithm problems. One of these problems is as following:
+					<br/>Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+
+					For example:
+
+					    1 -> A
+					    2 -> B
+					    3 -> C
+					    ...
+					    26 -> Z
+					    27 -> AA
+					    28 -> AB .<br/>
+    				<h5>My Solution</h5>
+				    <pre>
+public class Solution {  
+    public String convertToTitle(int n) {  
+    StringBuilder sb = new StringBuilder();  
+    int k;  
+    char c;  
+    while(n >0)  
+    {  
+        k = n%26;  
+        n = n/26;  
+  
+        if (k == 0) {  
+            sb.append('Z');  
+            n--;  
+        }  
+        else  
+        {  
+        k = (int)'A'+k-1;  
+        c = (char)k;  
+        sb.append(c);  
+        }  
+    }  
+    sb.reverse();  
+    return sb.toString();  
+}  
+}   
+				    </pre>
+</div>
+
+					</p>
+
+					<h3 >C++ </h3>
+
+					<p >
+						In the course of High Performance computing, I mainly use C++ and MPI. The problem needs students to find out all the number that is within d hamming distance of all given numbers. This problem is different from transitional problem since it puts high demands on high performance computation. For example, for a sequence of binary number of 20 digit, it has 1,048,576 possibilities.  For more digits, the number of possibilities would become extreme large. So we need to take advantage of parallel computing, combine a bunch of processors to finish this task. 
+					</p>
+					<p><strong>Input:</strong> n, l, d, S1, S2, ... Sn.</p>
+					<p><strong>Sequential Algorithm:</strong></p>
+					<p>I uses binary tree DFS to find all possibilities. At first, I form a virtual base node and it hold the value of S1 at level 0. I start by creating left tree node. When creating left tree node, I inverse the digit at tree level, while do nothing for the right tree node. To control node creating, I define path sum and node height (it is the same as tree level). Left node has the value of 1 while right node has the value of 0, so path sum stands for the current account for how many digits has been inverted.</p>
+					<p>Using the same spirit of sequential algorithm, master makes a similar tree. Its height is 'masterdepth', rather then l. The number that left node holds is a qualified number, so master wants to send it to workers. After master send out all qualified number, it send another p-1 terminate messages to p - 1 workers. Master's another task is to collect workers' solutions. This will happens after all workers finish their job. </p>
+					<p><strong>Communication Protocols: </strong></p>
+					<p>In my communication protocols, I guarantee that master produce messages and workers receive that message at the same time. When worker finishes its task, it stores the results in a result vector. After every worker finish its job, it resends the results back to master. On master side, it keeps producing messages. After that, the master waits to receive results from worker. </p>	
+					<p>The computation time for master includes the time for producing messages. The communication time is sending out message to worker and receiving results. Master keeps the same style: making message and giving out. Meanwhile, worker performs the following: getting message, calculating, and storing. In this way, computation time and communication time are overlapped. My algorithm achieves that master can keep sending message out, rather than waiting for workers' response. On the other hand, worker can simultaneously keep receiving message and produce results.  However, my algorithm has its disadvantage. Master sends out its receiving request after it finishing producing messages, while worker will only send back results after it completes all computations. The timing is hard to achieve, so the back coming results may be lost.</p>
+
+					<h4>Front End Development</h4>
+					<p>In building this site, I use Amazon Website Service EC2. All the web developing languages are used, such as Html, CSS, JS, PHP, MySQL, Bootstrap, JQuery. Bootscrap can refine my website dramatically. It also make my website a responsive website.</p>
+				</article>
+			</div>
+			<aside class="col-md-4">
+				<div class="panel panel-info">
+					<div class="panel-heading">My Motto</div>
+					<div class="panel-body">
+						<p>Chance favors only the prepared mind</p>
+					</div>
+				</div>
+			</aside>
+		</div>
+	</main>
+	<hr/>
+	<div class="container">
+            <footer class="footer">
+            <p class="pull-right"><a href="#">Back To Top</a></p>
+            <p>Website Map</p>
+            <a href="http://getbootstrap.com/">Using Boot Strap</a>
+            </footer>
+    </div>
+</body>
+</html>
